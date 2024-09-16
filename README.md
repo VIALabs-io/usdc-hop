@@ -1,6 +1,6 @@
 # USDC Multi-Hopping Demonstration - ProtoCCTP
 
-This repository is a demonstration of the **ProtoCCTP** feature, which enables **Multi-Hopping** of **USDC** tokens across multiple blockchains. It showcases the VIA Labs' **USDC Multi-Hop** functionality, allowing users to send USDC from a source chain to a final recipient on a destination chain, traversing multiple intermediary chains.
+This repository is a demonstration of the **ProtoCCTP** feature, which enables **Multi-Hopping** of **USDC** tokens across multiple CCTP enabled blockchains. It showcases the VIA Labs' **USDC Multi-Hop** functionality, allowing users to send USDC from a source chain to a final recipient on a destination chain, traversing multiple intermediary chains.
 
 ## Overview
 
@@ -23,7 +23,7 @@ Before you begin, ensure you have the following installed:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repository/usdc-multi-hop.git
+   git clone https://github.com/VIALabs-io/usdc-multi-hop.git
    cd usdc-multi-hop
    ```
 
