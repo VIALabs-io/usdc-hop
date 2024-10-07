@@ -1,12 +1,14 @@
 // SPDX-License-Identifier: MIT
 // (c)2024 Atlas (atlas@vialabs.io)
-pragma solidity =0.8.17;
+pragma solidity 0.8.17;
 
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@vialabs-io/contracts/features/ProtoCCTP.sol";
+import "@vialabs-io/contracts/features/FeatureCCTP.sol";
 
-contract USDCHop is ProtoCCTP {   
+contract USDCHop is FeatureCCTP {   
+    event Hop(uint256 chainId, uint256 hopNum);
+
     function go(uint[] calldata _path, address _finalRecipient, uint _amount) external {
         // "this" contract on destination chain of the first hop
         address _destSelf = CHAINS[_path[0]].endpoint;
@@ -23,7 +25,7 @@ contract USDCHop is ProtoCCTP {
     }
 
     // required processing function, can process multiple features and data
-    function _processMessageWithFeature(uint, uint, bytes memory _data, uint32, bytes memory, bytes memory) internal override {
+    function _processMessageWithFeature(uint, uint _sourceChainId, bytes memory _data, uint32, bytes memory, bytes memory) internal override {
         // decode our custom data
         (address _finalRecipient, uint _hop, uint[] memory _path) = abi.decode(_data, (address, uint, uint[]));
 
@@ -39,5 +41,7 @@ contract USDCHop is ProtoCCTP {
             // send to next hop
             _sendUSDC(_path[_hop], _destSelf, IERC20(usdc).balanceOf(address(this)), _newData);
         }
+
+        emit Hop(_sourceChainId, _hop);
     }
 }
